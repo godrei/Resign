@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "57E09131-DA88-4C2C-87A6-B9411092F57E",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ResignTest.xcodeproj",
+      "identifier" : "13D4FF802B7E473A00944EC1",
+      "name" : "ResignTest"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ResignTest.xcodeproj",
+        "identifier" : "13D4FF912B7E473C00944EC1",
+        "name" : "ResignTestTests"
+      }
+    }
+  ],
+  "version" : 1
+}

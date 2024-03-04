@@ -9,15 +9,22 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if let profile = MobileProvision.read() {
+            VStack(alignment: .leading) {
+                Text("Provisining Profile:")
+                Text("Name: " + profile.name)
+                Text("Type: " + profile.distributionType())
+                Text("- has provisioned devices: " + (profile.provisionedDevices.isEmpty ? "false" : "true"))
+                Text("- provisions all devices: " + (profile.provisionsAllDevices ?? false ? "true" : "false"))
+                Text("- get task allow: " + (profile.entitlements.getTaskAllow ? "true" : "false"))
+            }
+            .padding()
+        } else {
+            Text("Failed to read profile")
         }
-        .padding()
     }
 }
+
 
 #Preview {
     ContentView()
