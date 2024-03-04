@@ -38,5 +38,20 @@ final class MobileProvisionTests: XCTestCase {
             XCTAssertNotNil(profile)
         }
     }
+    
+    func testAppID() throws {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        // Any test you write for XCTest can be annotated as throws and async.
+        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
+        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        let profile = MobileProvision.read()
+        if profile != nil {
+            let appID = profile!.appID()
+            XCTAssertEqual(appID, "test id")
+        } else {
+            XCTAssertNotNil(profile)
+        }
+    }
 
 }

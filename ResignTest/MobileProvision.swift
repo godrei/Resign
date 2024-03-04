@@ -49,21 +49,27 @@ struct MobileProvision: Decodable {
         let keychainAccessGroups: [String]
         let getTaskAllow: Bool
         let apsEnvironment: Environment
+        let applicationIdentifier: String?
+        let comAppleApplicationIdentifier: String?
         
         private enum CodingKeys: String, CodingKey {
             case keychainAccessGroups = "keychain-access-groups"
             case getTaskAllow = "get-task-allow"
             case apsEnvironment = "aps-environment"
+            case applicationIdentifier = "application-identifier"
+            case comAppleApplicationIdentifier = "com.apple.application-identifier"
         }
         
         enum Environment: String, Decodable {
             case development, production, disabled
         }
         
-        init(keychainAccessGroups: Array<String>, getTaskAllow: Bool, apsEnvironment: Environment) {
+        init(keychainAccessGroups: Array<String>, getTaskAllow: Bool, apsEnvironment: Environment, applicationIdentifier: String?, comAppleApplicationIdentifier: String?) {
             self.keychainAccessGroups = keychainAccessGroups
             self.getTaskAllow = getTaskAllow
             self.apsEnvironment = apsEnvironment
+            self.applicationIdentifier = applicationIdentifier
+            self.comAppleApplicationIdentifier = comAppleApplicationIdentifier
         }
         
         init(from decoder: Decoder) throws {
@@ -71,8 +77,10 @@ struct MobileProvision: Decodable {
             let keychainAccessGroups: [String] = (try? container.decode([String].self, forKey: .keychainAccessGroups)) ?? []
             let getTaskAllow: Bool = (try? container.decode(Bool.self, forKey: .getTaskAllow)) ?? false
             let apsEnvironment: Environment = (try? container.decode(Environment.self, forKey: .apsEnvironment)) ?? .disabled
+            let applicationIdentifier: String? = (try? container.decode(String.self, forKey: .applicationIdentifier)) ?? nil
+            let comAppleApplicationIdentifier: String? = (try? container.decode(String.self, forKey: .comAppleApplicationIdentifier)) ?? nil
             
-            self.init(keychainAccessGroups: keychainAccessGroups, getTaskAllow: getTaskAllow, apsEnvironment: apsEnvironment)
+            self.init(keychainAccessGroups: keychainAccessGroups, getTaskAllow: getTaskAllow, apsEnvironment: apsEnvironment, applicationIdentifier: applicationIdentifier, comAppleApplicationIdentifier: comAppleApplicationIdentifier)
         }
     }
 }
@@ -122,6 +130,15 @@ extension MobileProvision {
         } else {
             return ""
         }
-            
+    }
+    
+    func appID() -> String {
+        if let appID = entitlements.applicationIdentifier {
+            return appID
+        }
+        if let appID = entitlements.comAppleApplicationIdentifier {
+            return appID
+        }
+        return ""
     }
 }
